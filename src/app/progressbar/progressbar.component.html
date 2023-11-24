@@ -1,0 +1,78 @@
+<!-- Load the font icons package: -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@progress/kendo-font-icons/dist/index.css"
+/>
+
+<style>
+    .custom-progressbar-value {
+      font-size: 30px; /* Adjust the font size as needed */
+    }
+
+    .custom-circular-progressbar {
+      position: relative; /* Required for relative positioning */
+      width: 200px; /* Adjust the width as needed (considering the border and padding) */
+      height: 150px; /* Adjust the height as needed (considering the border and padding) */
+      border: 5px solid #ccc; /* Increased border size, adjust as needed */
+      border-radius: 25px; /* Decreased border-radius to decrease the radius of the circular progress bar */
+      overflow: hidden; /* Ensure the border is visible */
+    }
+
+    .custom-circular-title {
+      position: absolute;
+      top: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 12px; /* Adjust the font size as needed */
+      color: #784BBB; /* Adjust the font color as needed */
+      white-space: nowrap;
+    }
+
+    .k-circular-wrap {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color:'#784BBB'
+    }
+
+    .custom-circular-progressbar:hover {
+      background-color: #E7DEF3;
+      cursor: pointer;
+    }
+
+  .custom-circular-progressbar:hover .custom-circular-title {
+      font-weight: bold;
+    }
+</style>
+<div class="row">
+  <div class="col" *ngFor="let kpi of kpiData">
+    <div class="custom-circular-progressbar">
+      <div class="custom-circular-title">{{ kpi.name }}</div>
+      <kendo-circularprogressbar
+        [progressColor]="colors"
+        [value]="kpi.value"
+        class="k-circular-wrap"
+        style="width: 100px; height: 100px;"
+      >
+        <ng-template
+          kendoCircularProgressbarCenterTemplate
+          let-color="color"
+          let-value="value"
+        >
+          <span
+            *ngIf="value !== 100"
+            [style.color]="color"
+            class="custom-progressbar-value"
+            >{{ kpi.value }}%
+          </span>
+          <span
+            *ngIf="value === 100"
+            [style.color]="color"
+            class="k-icon k-font-icon k-i-check"
+          ></span>
+        </ng-template>
+      </kendo-circularprogressbar>
+    </div>
+  </div>
+</div>
